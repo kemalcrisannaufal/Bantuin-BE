@@ -1,5 +1,11 @@
 import { Response } from "express";
 
+type Pagination = {
+  totalPage: number;
+  current: number;
+  total: number;
+};
+
 export default {
   success(res: Response, data: any, message: string) {
     res.status(200).json({
@@ -31,13 +37,29 @@ export default {
     });
   },
 
-  unauthorize(res: Response, message: string = "Unauthorized") {
+  unauthorize(res: Response, message: string = "Unauthorize") {
     res.status(403).json({
       meta: {
         status: 403,
         message,
       },
       data: null,
+    });
+  },
+
+  pagination(
+    res: Response,
+    data: any[],
+    pagination: Pagination,
+    message: string
+  ) {
+    res.status(200).json({
+      meta: {
+        status: 200,
+        message,
+      },
+      data,
+      pagination,
     });
   },
 };
