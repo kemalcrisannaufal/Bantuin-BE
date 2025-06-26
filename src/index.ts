@@ -20,8 +20,8 @@ async function init() {
     app.use("/api", router);
     docs(app);
 
-    app.use("/", (req, res) => {
-      response.success(res, null, "Server is running!");
+    app.get("/", (req, res) => {
+      res.status(200).json({ message: "Server is Running", data: null });
     });
 
     app.listen(PORT, () => {
