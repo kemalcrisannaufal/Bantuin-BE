@@ -1,6 +1,9 @@
 import express from "express";
 import router from "./routes/api";
 import db from "../src/utils/database";
+import cors from "cors";
+import docs from "./docs/routes";
+import response from "./utils/response";
 
 async function init() {
   try {
@@ -9,11 +12,17 @@ async function init() {
 
     const app = express();
 
+    app.use(cors());
     app.use(express.json());
 
     const PORT = 3000;
 
     app.use("/api", router);
+    docs(app);
+
+    app.use("/", (req, res) => {
+      response.success(res, null, "Server is running!");
+    });
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

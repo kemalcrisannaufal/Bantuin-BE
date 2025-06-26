@@ -93,6 +93,31 @@ const TransactionController = {
       response.error(res, err.message);
     }
   },
+  async findOne(req: IReqUser, res: Response) {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId || !isValidObjectId(userId)) {
+        return response.notFound(res, "Invalid userId!");
+      }
+
+      const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(res, "Id is not found!");
+      }
+
+      const data = await TransactionModel.findById(id);
+      if (!data) {
+        return response.notFound(res);
+      }
+
+      response.success(res, data, "Succes get one transaction!");
+      response.success;
+    } catch (error) {
+      const err = error as Error;
+      response.error(res, err.message);
+    }
+  },
   async update(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
