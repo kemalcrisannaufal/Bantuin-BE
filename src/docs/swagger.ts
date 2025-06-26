@@ -1,22 +1,19 @@
-import { version } from "mongoose";
 import swaggerAutogen from "swagger-autogen";
 
-const outputFile = "./swagger_output.json";
-const endpointsFile = ["../routes/api.ts"];
 const doc = {
   info: {
-    version: "v0.0.1",
-    title: "Dokumentasi API BantuIn",
-    description: "Dokumentasi API BantuIn",
+    version: "v.0.0.1",
+    title: "BantuIn",
+    description: "BantuIn API documentation",
   },
   servers: [
     {
       url: "http://localhost:3000/api",
-      description: "Local Server",
+      description: "Local server",
     },
     {
-      url: "http://back-end-bantuin.vercel.app/api",
-      description: "Deploy Server",
+      url: "https://back-end-bantuin.vercel.app/api",
+      description: "Production server",
     },
   ],
   components: {
@@ -55,5 +52,7 @@ const doc = {
     },
   },
 };
+const outputFile = "./swagger_output.json";
+const endpointsFiles = ["../routes/api.ts"];
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFile, doc);
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
