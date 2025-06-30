@@ -74,6 +74,27 @@ router.get(
     #swagger.security=[{ "bearerAuth": [] }]
   */
 );
+
+router.get(
+  "/transaction/totals",
+  authMiddleware,
+  TransactionController.total
+  /**
+    #swagger.tags = ['Transaction']
+    #swagger.security=[{ "bearerAuth": [] }]
+  */
+);
+
+router.get(
+  "/transaction/summary/categories",
+  authMiddleware,
+  TransactionController.summaryByCategory
+  /**
+    #swagger.tags = ['Transaction']
+    #swagger.security=[{ "bearerAuth": [] }]
+  */
+);
+
 router.get(
   "/transaction/:id",
   authMiddleware,
