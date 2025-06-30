@@ -11,7 +11,7 @@ enum INCOME_CATEGORY {
 enum EXPENSE_CATEGORY {
   FOOD = "makanan/minuman",
   TRANSPORTATION = "transportasi",
-  HOUSING = "tagihan (listrik/air/internet)",
+  HOUSING = "tagihan (Listrik/Air/Internet)",
   SHOPPING = "belanja",
   ENTERTAINMENT = "hiburan",
   HEALTH = "kesehatan",

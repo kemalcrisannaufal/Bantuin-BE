@@ -49,6 +49,12 @@ const doc = {
         type: "income",
         category: "Gaji",
       },
+
+      CreateNoteRequest: {
+        title: "Judul notes ditulis disini!",
+        content: "Lorem ipsum dolor sit amet.",
+        isPinned: false,
+      },
     },
   },
 };

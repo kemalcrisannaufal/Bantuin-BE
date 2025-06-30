@@ -2,9 +2,11 @@ import express from "express";
 import AuthController from "../controllers/auth.controller";
 import authMiddleware from "../middleware/auth.middleware";
 import TransactionController from "../controllers/transaction.controller";
+import noteController from "../controllers/note.controller";
 
 const router = express.Router();
 
+/** Auth **/
 router.post(
   "/auth/register",
   AuthController.register
@@ -36,7 +38,6 @@ router.get(
     #swagger.security=[{ "bearerAuth": [] }]
   */
 );
-
 router.post(
   "/auth/change-password",
   authMiddleware,
@@ -51,6 +52,7 @@ router.post(
   */
 );
 
+/** Transaction **/
 router.post(
   "/transaction",
   authMiddleware,
@@ -104,6 +106,7 @@ router.get(
     #swagger.security=[{ "bearerAuth": [] }]
   */
 );
+
 router.put(
   "/transaction/:id",
   authMiddleware,
@@ -117,6 +120,7 @@ router.put(
     }
   */
 );
+
 router.delete(
   "/transaction/:id",
   authMiddleware,
@@ -124,6 +128,65 @@ router.delete(
   /**
     #swagger.tags = ['Transaction']
     #swagger.security=[{ "bearerAuth": [] }]
+  */
+);
+
+/** Note **/
+router.post(
+  "/note",
+  authMiddleware,
+  noteController.create
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+    #swagger.requestBody = {
+      required:true,
+      schema: {$ref: '#/components/schemas/CreateNoteRequest'}
+    }
+  */
+);
+
+router.get(
+  "/note",
+  authMiddleware,
+  noteController.findAll
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth" : [] }] 
+  */
+);
+
+router.get(
+  "/note/:id",
+  authMiddleware,
+  noteController.findOne
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth" : [] }] 
+  */
+);
+
+router.put(
+  "/note/:id",
+  authMiddleware,
+  noteController.update
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth" : [] }] 
+    #swagger.requestBody = {
+      required:true,
+      schema: {$ref: '#/components/schemas/CreateNoteRequest'}
+    }
+  */
+);
+
+router.delete(
+  "/note/:id",
+  authMiddleware,
+  noteController.delete
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth" : [] }] 
   */
 );
 

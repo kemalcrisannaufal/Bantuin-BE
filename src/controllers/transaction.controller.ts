@@ -13,10 +13,6 @@ const TransactionController = {
     try {
       const userId = req.user?.id;
 
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
-
       await transactionDTO.validate(req.body);
 
       const result = await TransactionModel.create({
@@ -33,10 +29,6 @@ const TransactionController = {
   async findAll(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
-
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
 
       const buildQuery = (filter: any, userId: string) => {
         let query: FilterQuery<TypeTransaction> = { userId };
@@ -100,16 +92,12 @@ const TransactionController = {
     try {
       const userId = req.user?.id;
 
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
-
       const { id } = req.params;
       if (!isValidObjectId(id)) {
         return response.notFound(res, "Id is not found!");
       }
 
-      const data = await TransactionModel.findById(id);
+      const data = await TransactionModel.findOne({ _id: id, userId });
       if (!data) {
         return response.notFound(res);
       }
@@ -124,10 +112,6 @@ const TransactionController = {
   async update(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
-
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
 
       const { id } = req.params;
 
@@ -160,10 +144,6 @@ const TransactionController = {
     try {
       const userId = req.user?.id;
 
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
-
       const { id } = req.params;
 
       if (!isValidObjectId(id)) {
@@ -189,10 +169,6 @@ const TransactionController = {
   async total(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
-
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid userId!");
-      }
 
       const buildQuery = (filter: any, userId: string) => {
         let query: FilterQuery<ITransaction> = { userId };
@@ -273,10 +249,6 @@ const TransactionController = {
   async summaryByCategory(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
-
-      if (!userId || !isValidObjectId(userId)) {
-        return response.notFound(res, "Invalid User Id!");
-      }
 
       const buildQuery = (filter: any, userId: string) => {
         const query: FilterQuery<ITransaction> = { userId };

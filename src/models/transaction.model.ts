@@ -43,6 +43,7 @@ const TransactionSchema = new Schema<ITransaction>(
     date: {
       type: Schema.Types.Date,
       required: true,
+      index: true,
     },
     category: {
       type: Schema.Types.String,
