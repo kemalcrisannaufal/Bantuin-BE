@@ -510,7 +510,28 @@
             }
           },
           {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isPinned",
             "in": "query",
             "schema": {
               "type": "string"
@@ -600,18 +621,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateNoteRequest"
+                "$ref": "#/components/schemas/UpdateNoteRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/CreateNoteRequest"
+                "$ref": "#/components/schemas/UpdateNoteRequest"
               }
             }
           }
         }
       },
       "delete": {
+        "tags": [
+          "Notes"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/note/{id}/pin-status": {
+      "patch": {
         "tags": [
           "Notes"
         ],
@@ -768,6 +824,22 @@
         },
         "xml": {
           "name": "CreateNoteRequest"
+        }
+      },
+      "UpdateNoteRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Judul notes ditulis disini!"
+          },
+          "content": {
+            "type": "string",
+            "example": "Lorem ipsum dolor sit amet."
+          }
+        },
+        "xml": {
+          "name": "UpdateNoteRequest"
         }
       }
     }

@@ -55,6 +55,10 @@ const doc = {
         content: "Lorem ipsum dolor sit amet.",
         isPinned: false,
       },
+      UpdateNoteRequest: {
+        title: "Judul notes ditulis disini!",
+        content: "Lorem ipsum dolor sit amet.",
+      },
     },
   },
 };

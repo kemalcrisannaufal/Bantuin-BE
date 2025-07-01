@@ -12,6 +12,11 @@ export const noteDTO = Yup.object({
   userId: Yup.string(),
 });
 
+export const noteUpdateDTO = Yup.object({
+  title: Yup.string().required().max(100),
+  content: Yup.string().required().max(5000),
+});
+
 export type TypeNote = Yup.InferType<typeof noteDTO>;
 
 export interface INote extends Omit<TypeNote, "userId"> {

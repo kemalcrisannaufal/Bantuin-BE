@@ -175,8 +175,18 @@ router.put(
     #swagger.security = [{ "bearerAuth" : [] }] 
     #swagger.requestBody = {
       required:true,
-      schema: {$ref: '#/components/schemas/CreateNoteRequest'}
+      schema: {$ref: '#/components/schemas/UpdateNoteRequest'}
     }
+  */
+);
+
+router.patch(
+  "/note/:id/pin-status",
+  authMiddleware,
+  noteController.switchPinStatus
+  /**
+    #swagger.tags = ["Notes"]
+    #swagger.security = [{ "bearerAuth" : [] }] 
   */
 );
 

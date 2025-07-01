@@ -15,8 +15,15 @@ const TransactionController = {
 
       await transactionDTO.validate(req.body);
 
+      const { name, description, amount, date, type, category } = req.body;
+
       const result = await TransactionModel.create({
-        ...req.body,
+        name,
+        description,
+        amount,
+        date,
+        type,
+        category,
         userId,
       });
 
@@ -121,10 +128,17 @@ const TransactionController = {
 
       await transactionDTO.validate(req.body);
 
+      const { name, description, amount, date, type, category } = req.body;
+
       const result = await TransactionModel.findOneAndUpdate(
         { _id: id, userId },
         {
-          ...req.body,
+          name,
+          description,
+          amount,
+          date,
+          type,
+          category,
           userId,
         },
         { new: true }
