@@ -141,7 +141,7 @@
         }
       }
     },
-    "/transaction": {
+    "/transactions": {
       "post": {
         "tags": [
           "Transaction"
@@ -250,7 +250,7 @@
         ]
       }
     },
-    "/transaction/totals": {
+    "/transactions/totals": {
       "get": {
         "tags": [
           "Transaction"
@@ -291,7 +291,7 @@
         ]
       }
     },
-    "/transaction/summary/categories": {
+    "/transactions/summary/categories": {
       "get": {
         "tags": [
           "Transaction"
@@ -339,7 +339,7 @@
         ]
       }
     },
-    "/transaction/{id}": {
+    "/transactions/{id}": {
       "get": {
         "tags": [
           "Transaction"
@@ -455,7 +455,7 @@
         ]
       }
     },
-    "/note": {
+    "/notes": {
       "post": {
         "tags": [
           "Notes"
@@ -550,7 +550,7 @@
         ]
       }
     },
-    "/note/{id}": {
+    "/notes/{id}": {
       "get": {
         "tags": [
           "Notes"
@@ -666,10 +666,283 @@
         ]
       }
     },
-    "/note/{id}/pin-status": {
+    "/notes/{id}/pin-status": {
       "patch": {
         "tags": [
           "Notes"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/todos": {
+      "post": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoRequest"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dueDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/todos/today": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/todos/{id}/completed": {
+      "patch": {
+        "tags": [
+          "Todo"
         ],
         "description": "",
         "parameters": [
@@ -840,6 +1113,26 @@
         },
         "xml": {
           "name": "UpdateNoteRequest"
+        }
+      },
+      "CreateTodoRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Tugas pertama!"
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          },
+          "dueDate": {
+            "type": "string",
+            "example": "2025-07-01"
+          }
+        },
+        "xml": {
+          "name": "CreateTodoRequest"
         }
       }
     }

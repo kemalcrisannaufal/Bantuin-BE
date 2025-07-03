@@ -3,6 +3,7 @@ import AuthController from "../controllers/auth.controller";
 import authMiddleware from "../middleware/auth.middleware";
 import TransactionController from "../controllers/transaction.controller";
 import noteController from "../controllers/note.controller";
+import todoController from "../controllers/todo.controller";
 
 const router = express.Router();
 
@@ -54,7 +55,7 @@ router.post(
 
 /** Transaction **/
 router.post(
-  "/transaction",
+  "/transactions",
   authMiddleware,
   TransactionController.create
   /**
@@ -68,7 +69,7 @@ router.post(
 );
 
 router.get(
-  "/transaction",
+  "/transactions",
   authMiddleware,
   TransactionController.findAll
   /**
@@ -78,7 +79,7 @@ router.get(
 );
 
 router.get(
-  "/transaction/totals",
+  "/transactions/totals",
   authMiddleware,
   TransactionController.total
   /**
@@ -88,7 +89,7 @@ router.get(
 );
 
 router.get(
-  "/transaction/summary/categories",
+  "/transactions/summary/categories",
   authMiddleware,
   TransactionController.summaryByCategory
   /**
@@ -98,7 +99,7 @@ router.get(
 );
 
 router.get(
-  "/transaction/:id",
+  "/transactions/:id",
   authMiddleware,
   TransactionController.findOne
   /**
@@ -108,7 +109,7 @@ router.get(
 );
 
 router.put(
-  "/transaction/:id",
+  "/transactions/:id",
   authMiddleware,
   TransactionController.update
   /**
@@ -122,7 +123,7 @@ router.put(
 );
 
 router.delete(
-  "/transaction/:id",
+  "/transactions/:id",
   authMiddleware,
   TransactionController.delete
   /**
@@ -133,7 +134,7 @@ router.delete(
 
 /** Note **/
 router.post(
-  "/note",
+  "/notes",
   authMiddleware,
   noteController.create
   /**
@@ -147,7 +148,7 @@ router.post(
 );
 
 router.get(
-  "/note",
+  "/notes",
   authMiddleware,
   noteController.findAll
   /**
@@ -157,7 +158,7 @@ router.get(
 );
 
 router.get(
-  "/note/:id",
+  "/notes/:id",
   authMiddleware,
   noteController.findOne
   /**
@@ -167,7 +168,7 @@ router.get(
 );
 
 router.put(
-  "/note/:id",
+  "/notes/:id",
   authMiddleware,
   noteController.update
   /**
@@ -181,7 +182,7 @@ router.put(
 );
 
 router.patch(
-  "/note/:id/pin-status",
+  "/notes/:id/pin-status",
   authMiddleware,
   noteController.switchPinStatus
   /**
@@ -191,12 +192,91 @@ router.patch(
 );
 
 router.delete(
-  "/note/:id",
+  "/notes/:id",
   authMiddleware,
   noteController.delete
   /**
     #swagger.tags = ["Notes"]
     #swagger.security = [{ "bearerAuth" : [] }] 
+  */
+);
+
+/** Todo **/
+router.post(
+  "/todos",
+  authMiddleware,
+  todoController.create
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+    #swagger.requestBody = {
+      required:true,
+      schema: {$ref: '#/components/schemas/CreateTodoRequest'}
+    }
+  */
+);
+
+router.get(
+  "/todos",
+  authMiddleware,
+  todoController.findAll
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+  */
+);
+
+router.get(
+  "/todos/today",
+  authMiddleware,
+  todoController.toDoToday
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+  */
+);
+
+router.get(
+  "/todos/:id",
+  authMiddleware,
+  todoController.findOne
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+  */
+);
+
+router.put(
+  "/todos/:id",
+  authMiddleware,
+  todoController.update
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+    #swagger.requestBody = {
+      required:true,
+      schema: {$ref: '#/components/schemas/CreateTodoRequest'}
+    }
+  */
+);
+
+router.delete(
+  "/todos/:id",
+  authMiddleware,
+  todoController.remove
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
+  */
+);
+
+router.patch(
+  "/todos/:id/completed",
+  authMiddleware,
+  todoController.markAsCompleted
+  /**
+    #swagger.tags = ["Todo"]
+    #swagger.security = [{ "bearerAuth": [] }] 
   */
 );
 

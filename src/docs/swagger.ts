@@ -59,6 +59,11 @@ const doc = {
         title: "Judul notes ditulis disini!",
         content: "Lorem ipsum dolor sit amet.",
       },
+      CreateTodoRequest: {
+        title: "Tugas pertama!",
+        description: "",
+        dueDate: "2025-07-01",
+      },
     },
   },
 };
