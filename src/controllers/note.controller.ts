@@ -135,9 +135,8 @@ const noteController = {
         {
           _id: id,
           userId,
-          lastEdited: new Date(),
         },
-        { content, title },
+        { content, title, lastEdited: new Date() },
         {
           new: true,
         }
