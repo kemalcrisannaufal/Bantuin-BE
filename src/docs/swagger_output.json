@@ -782,6 +782,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -939,7 +946,7 @@
         ]
       }
     },
-    "/todos/{id}/completed": {
+    "/todos/{id}/status": {
       "patch": {
         "tags": [
           "Todo"

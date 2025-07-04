@@ -271,9 +271,9 @@ router.delete(
 );
 
 router.patch(
-  "/todos/:id/completed",
+  "/todos/:id/status",
   authMiddleware,
-  todoController.markAsCompleted
+  todoController.switchStatus
   /**
     #swagger.tags = ["Todo"]
     #swagger.security = [{ "bearerAuth": [] }] 

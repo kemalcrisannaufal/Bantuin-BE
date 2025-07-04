@@ -58,18 +58,70 @@ const todoController = {
           };
         }
 
+        if (filter.range) {
+          const ranges = ["today", "tomorrow", "next7", "next30", "overdue"];
+          let startDate;
+          let endDate;
+
+          const today = new Date();
+
+          startDate = new Date();
+          startDate.setHours(0, 0, 0, 0);
+
+          if (filter.range === "today") {
+            endDate = new Date();
+          }
+
+          if (filter.range === "tomorrow") {
+            endDate = new Date();
+            endDate.setDate(today.getDate() + 1);
+          }
+
+          if (filter.range === "next7") {
+            endDate = new Date();
+            endDate.setDate(today.getDate() + 7);
+          }
+
+          if (filter.range === "next30") {
+            endDate = new Date();
+            endDate.setDate(today.getDate() + 30);
+          }
+
+          if (filter.range === "overdue") {
+            endDate = today;
+            endDate.setHours(
+              today.getHours(),
+              today.getMinutes(),
+              today.getSeconds()
+            );
+
+            query.dueDate = {
+              $lt: endDate,
+            };
+          }
+
+          if (ranges.includes(filter.range) && filter.range !== "overdue") {
+            endDate!.setHours(23, 59, 59, 999);
+
+            query.dueDate = {
+              $gte: startDate,
+              $lt: endDate,
+            };
+          }
+        }
+
         return query;
       };
 
-      const { limit = 10, page = 1, status, dueDate } = req.query;
+      const { limit = 10, page = 1, status, dueDate, range } = req.query;
 
-      const query = buildQuery({ status, dueDate }, `${userId}`);
+      const query = buildQuery({ status, dueDate, range }, `${userId}`);
 
       const result = await TodoModel.find(query)
         .limit(+limit)
         .skip((+page - 1) * +limit)
         .lean()
-        .sort({ dueDate: -1 })
+        .sort({ dueDate: 1 })
         .exec();
 
       const count = await TodoModel.countDocuments(query);
@@ -179,7 +231,7 @@ const todoController = {
     }
   },
 
-  async markAsCompleted(req: IReqUser, res: Response) {
+  async switchStatus(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
 
@@ -198,14 +250,17 @@ const todoController = {
         return response.notFound(res);
       }
 
-      if (todo?.status === "completed") {
-        return response.error(res, "Todo as already completed!");
-      }
-
-      todo.status = TODO_STATUS.COMPLETED;
+      todo.status =
+        todo.status === TODO_STATUS.COMPLETED
+          ? TODO_STATUS.PENDING
+          : TODO_STATUS.COMPLETED;
       todo.save();
 
-      response.success(res, todo, "Success mark as completed todo!");
+      response.success(
+        res,
+        todo,
+        `Success switch todo status to ${todo.status}!`
+      );
     } catch (error) {
       const err = error as Error;
       response.error(res, err.message);
