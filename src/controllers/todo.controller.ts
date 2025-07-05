@@ -41,13 +41,16 @@ const todoController = {
 
         query.userId = Types.ObjectId.createFromHexString(userId);
 
+        if (filter.search) {
+          query.$text = { $search: filter.search };
+        }
+
         if (filter.status) {
           query.status = filter.status;
         }
 
         if (filter.dueDate) {
           const startDate = new Date(filter.dueDate);
-          startDate.setHours(0, 0, 0, 0);
 
           const endDate = new Date(filter.dueDate);
           endDate.setHours(23, 59, 59, 999);
@@ -66,7 +69,16 @@ const todoController = {
           const today = new Date();
 
           startDate = new Date();
-          startDate.setHours(0, 0, 0, 0);
+
+          if (filter.upcoming) {
+            startDate.setHours(
+              today.getHours(),
+              today.getMinutes(),
+              today.getSeconds()
+            );
+          } else {
+            startDate.setHours(0, 0, 0, 0);
+          }
 
           if (filter.range === "today") {
             endDate = new Date();
@@ -113,15 +125,27 @@ const todoController = {
         return query;
       };
 
-      const { limit = 10, page = 1, status, dueDate, range } = req.query;
+      const {
+        limit = 10,
+        page = 1,
+        search,
+        status,
+        dueDate,
+        range,
+        upcoming = false,
+        order = "asc",
+      } = req.query;
 
-      const query = buildQuery({ status, dueDate, range }, `${userId}`);
+      const query = buildQuery(
+        { search, status, dueDate, range, upcoming },
+        `${userId}`
+      );
 
       const result = await TodoModel.find(query)
         .limit(+limit)
         .skip((+page - 1) * +limit)
         .lean()
-        .sort({ dueDate: 1 })
+        .sort({ dueDate: order === "asc" ? 1 : -1 })
         .exec();
 
       const count = await TodoModel.countDocuments(query);

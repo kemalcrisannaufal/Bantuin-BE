@@ -45,7 +45,7 @@ const TodoSchema = new Schema<ITodo>(
     },
   },
   { timestamps: true }
-);
+).index({ title: "text", description: "text" });
 
 const TODO_MODEL_NAME = "Todo";
 const TodoModel = mongoose.model(TODO_MODEL_NAME, TodoSchema);
