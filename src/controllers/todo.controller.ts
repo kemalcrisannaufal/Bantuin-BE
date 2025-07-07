@@ -70,7 +70,7 @@ const todoController = {
 
           startDate = new Date();
 
-          if (filter.upcoming) {
+          if (filter.upcoming === "true") {
             startDate.setHours(
               today.getHours(),
               today.getMinutes(),
